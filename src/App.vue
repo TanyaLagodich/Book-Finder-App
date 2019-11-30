@@ -5,6 +5,8 @@
                   class="mb-5" />
     <books-list v-if="books.length" 
                 :books="books" />
+    <pagination v-if="total > 10"
+                :total="total" />
   </div>
 </template>
 
@@ -13,19 +15,28 @@ import { Component, Vue } from 'vue-property-decorator';
 import { getSearchingList } from './api';
 import SearchInput from './components/SearchInput.vue';
 import BooksList from './components/BooksList.vue';
+import Params from './ty'
+
+interface Params {
+  limit: number,
+  offset: number,
+  total?: number
+};
 
 @Component({
   components: { SearchInput, BooksList },
 })
 export default class App extends Vue {
   public books: Array<object> = [];
+  public total: number = 0;
 
-  public async searchBooks(query: string) {
+  public async searchBooks(query: string, params: Params) {
     if (!query) {
       return;
     }
-    let { items, totalItems } = await getSearchingList(query);
+    let { items, totalItems } = await getSearchingList(query, params);
     this.books = items;
+    this.total = totalItems;
     console.log(this.books);
   }
 }

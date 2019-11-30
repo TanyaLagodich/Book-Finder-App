@@ -13,7 +13,6 @@
               :alt="book.volumeInfo.title"
               class="d-block mr-4">
           <div>
-            <!-- <h3 class="text-left">{{ book.volumeInfo.title }}</h3> -->
             <p v-if="book.volumeInfo.authors"
               class="text-left">{{ book.volumeInfo.authors.join(', ') }}</p>
             <p class="text-left">{{ book.volumeInfo.publishedDate }}</p>

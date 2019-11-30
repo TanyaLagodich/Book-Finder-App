@@ -1,6 +1,7 @@
 <template>
   <div id="app"
        class="container">
+    <h1>Book Finder</h1>
     <search-input @searchBooks="searchBooks"
                   class="mb-5" />
     <books-list v-if="books.length" 
@@ -15,13 +16,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import { getSearchingList } from './api';
 import SearchInput from './components/SearchInput.vue';
 import BooksList from './components/BooksList.vue';
-import Params from './ty'
-
-interface Params {
-  limit: number,
-  offset: number,
-  total?: number
-};
+import { PgnSets } from './typings/entities';
 
 @Component({
   components: { SearchInput, BooksList },
@@ -30,7 +25,7 @@ export default class App extends Vue {
   public books: Array<object> = [];
   public total: number = 0;
 
-  public async searchBooks(query: string, params: Params) {
+  public async searchBooks(query: string, params: PgnSets) {
     if (!query) {
       return;
     }

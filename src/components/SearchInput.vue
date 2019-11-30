@@ -5,33 +5,33 @@
            placeholder="Type author, book name, other..."
            aria-label="Type author, book name, other..." 
            aria-describedby="basic-addon2"
-           v-model="query"
-           @keydown.enter="$emit('searchBooks', query, params)">
+           v-model="params.query"
+           @keydown.enter="$emit('searchBooks', params)">
     <div class="input-group-append">
-      <button v-if="query" 
+      <button v-if="params.query" 
               type="button" 
               class="btn btn-outline-secondary btn-close" 
               aria-label="Close"
-              @click="query = ''">
+              @click="params.query = ''">
         <span aria-hidden="true">&times;</span>
       </button>
       <button class="btn btn-outline-secondary" 
               type="button"
-              @click="$emit('searchBooks', query, params)">Search</button>
+              @click="$emit('searchBooks', params)">Search</button>
     </div>
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
-
-const params = {
-  limit: 0,
-  offset: 0,
-}
+import { PgnSets } from '../typings/entities';
 
 @Component
 export default class SeachInput extends Vue {
-  public query: string = '';
+  params: PgnSets = {
+    query: '',
+    limit: 10,
+    offset: 0,
+  }
 }
 </script>

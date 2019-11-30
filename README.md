@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # book-finder
 
 ## Project setup
@@ -32,3 +33,6 @@ yarn run test:unit
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+=======
+# Book-Finder-App
+>>>>>>> 87b489576878d5923c51fa2582ba240e5b224145

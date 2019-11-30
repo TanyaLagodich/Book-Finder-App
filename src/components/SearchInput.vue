@@ -27,6 +27,6 @@ import Component from 'vue-class-component';
 
 @Component
 export default class SeachInput extends Vue {
-  public query = '';
+  public query: string = '';
 }
 </script>

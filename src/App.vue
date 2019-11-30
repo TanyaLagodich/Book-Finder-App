@@ -1,7 +1,10 @@
 <template>
   <div id="app"
        class="container">
-    <search-input @searchBooks="searchBooks" />
+    <search-input @searchBooks="searchBooks"
+                  class="mb-5" />
+    <books-list v-if="books.length" 
+                :books="books" />
   </div>
 </template>
 
@@ -9,17 +12,21 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { getSearchingList } from './api';
 import SearchInput from './components/SearchInput.vue';
+import BooksList from './components/BooksList.vue';
 
 @Component({
-  components: { SearchInput },
+  components: { SearchInput, BooksList },
 })
 export default class App extends Vue {
+  public books: Array<object> = [];
 
   public async searchBooks(query: string) {
     if (!query) {
       return;
     }
-    await getSearchingList(query);
+    let { items, totalItems } = await getSearchingList(query);
+    this.books = items;
+    console.log(this.books);
   }
 }
 </script>

@@ -4,3 +4,7 @@ export interface PgnSets {
   total?: number
   query?: string
 }
+
+export interface Pagination {
+  
+}

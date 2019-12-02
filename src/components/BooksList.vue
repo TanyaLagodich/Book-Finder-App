@@ -31,9 +31,7 @@ import Component from 'vue-class-component';
     books: Array
   }
 })
-export default class BooksList extends Vue{
-  
-}
+export default class BooksList extends Vue {}
 </script>
 <style lang="scss" scoped>
   img {

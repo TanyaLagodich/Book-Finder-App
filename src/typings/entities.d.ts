@@ -5,6 +5,7 @@ export interface PgnSets {
   query?: string
 }
 
-export interface Pagination {
-  
+export interface PaginationType {
+  items: Array<any>,
+  total: number
 }

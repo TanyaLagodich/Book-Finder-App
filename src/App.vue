@@ -19,7 +19,7 @@ import { getSearchingList } from './api';
 import SearchInput from './components/SearchInput.vue';
 import BooksList from './components/BooksList.vue';
 import Pagination from './components/Pagination.vue';
-import { PgnSets } from './typings/entities';
+import { PgnSets, PaginationType } from './typings/entities';
 
 @Component({
   components: { SearchInput, BooksList, Pagination },
@@ -36,7 +36,6 @@ export default class App extends Vue {
     let { items, totalItems } = await getSearchingList(params);
     this.books = items;
     this.pgnSets.total = totalItems;
-    console.log(this.books);
   }
 }
 </script>

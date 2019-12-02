@@ -22,20 +22,19 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import { Prop } from 'vue-property-decorator'
 import { PgnSets } from '../typings/entities';
+import { Prop } from 'vue-property-decorator';
 
 @Component
 export default class Pagination extends Vue {
   @Prop()
-    pgnSets: PgnSets = {}
-
+    pgnSets!: PgnSets
+  
   public totalPage: Array<number> = [];
 
   created() {
     let amount = Math.floor(this.pgnSets.total / this.pgnSets.limit);
     this.totalPage = [...Array(amount).keys()].slice(1);
-    console.log(this.totalPage);
   }
 
   changeParams(page: number): void {

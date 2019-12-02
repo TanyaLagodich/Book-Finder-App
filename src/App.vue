@@ -25,7 +25,7 @@ import { PgnSets, PaginationType } from './typings/entities';
   components: { SearchInput, BooksList, Pagination },
 })
 export default class App extends Vue {
-  public books: Array<object> = [];
+  public books: object[] = [];
   public pgnSets: PgnSets = {};
 
   public async searchBooks(params: PgnSets) {
@@ -33,7 +33,7 @@ export default class App extends Vue {
       return;
     }
     this.pgnSets = {...params};
-    let { items, totalItems } = await getSearchingList(params);
+    const { items, totalItems } = await getSearchingList(params);
     this.books = items;
     this.pgnSets.total = totalItems;
   }

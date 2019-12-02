@@ -28,10 +28,10 @@ import { PgnSets } from '../typings/entities';
 
 @Component
 export default class SeachInput extends Vue {
-  params: PgnSets = {
+  public params: PgnSets = {
     query: '',
-    limit: 10,
-    offset: 0,
-  }
+    maxResults: 10,
+    startIndex: 0,
+  };
 }
 </script>

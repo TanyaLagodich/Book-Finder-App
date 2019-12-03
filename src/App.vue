@@ -4,9 +4,9 @@
       <h1>Book Finder</h1>
       <search-input @searchBooks="searchBooks"
                     class="mb-5" />
-      <books-list v-if="books.length" 
+      <books-list v-if="books && books.length" 
                   :books="books" />
-      <pagination v-if="pgnSets.total > 10"
+      <pagination v-if="books && books.length && pgnSets.total > 10"
                   :pgn-sets="pgnSets"
                   @searchBooks="searchBooks" />
     </div>
@@ -19,14 +19,19 @@ import { getSearchingList } from './api';
 import SearchInput from './components/SearchInput.vue';
 import BooksList from './components/BooksList.vue';
 import Pagination from './components/Pagination.vue';
-import { PgnSets, PaginationType } from './typings/entities';
+import { PgnSets } from './typings/entities';
 
 @Component({
   components: { SearchInput, BooksList, Pagination },
 })
 export default class App extends Vue {
   public books: object[] = [];
-  public pgnSets: PgnSets = {};
+  public pgnSets: PgnSets = {
+    query: '',
+    maxResults: 10,
+    startIndex: 0,
+    total: 0,
+  };
 
   public async searchBooks(params: PgnSets) {
     if (!params.query) {

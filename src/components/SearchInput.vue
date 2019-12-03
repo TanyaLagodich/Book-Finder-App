@@ -32,6 +32,7 @@ export default class SeachInput extends Vue {
     query: '',
     maxResults: 10,
     startIndex: 0,
+    total: 0,
   };
 }
 </script>

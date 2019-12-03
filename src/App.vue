@@ -3,12 +3,19 @@
     <div class="container">
       <h1>Book Finder</h1>
       <search-input @searchBooks="searchBooks"
-                    class="mb-5" />
-      <books-list v-if="books && books.length" 
-                  :books="books" />
-      <pagination v-if="books && books.length && pgnSets.total > 10"
-                  :pgn-sets="pgnSets"
-                  @searchBooks="searchBooks" />
+                    class="mb-5"
+                    :readonly="isLoading" />
+      <div v-if="isLoading"
+           class="h-100">
+        <loader />
+      </div>
+      <div v-else>
+        <books-list v-if="books && books.length" 
+                    :books="books" />
+        <pagination v-if="books && books.length && pgnSets.total > 10"
+                    :pgn-sets="pgnSets"
+                    @searchBooks="searchBooks" />
+      </div>
     </div>
   </div>
 </template>
@@ -19,13 +26,15 @@ import { getSearchingList } from './api';
 import SearchInput from './components/SearchInput.vue';
 import BooksList from './components/BooksList.vue';
 import Pagination from './components/Pagination.vue';
+import Loader from './components/Loader.vue';
 import { PgnSets } from './typings/entities';
 
 @Component({
-  components: { SearchInput, BooksList, Pagination },
+  components: { SearchInput, Loader, BooksList, Pagination },
 })
 export default class App extends Vue {
   public books: object[] = [];
+  public isLoading: boolean = false;
   public pgnSets: PgnSets = {
     query: '',
     maxResults: 10,
@@ -38,7 +47,9 @@ export default class App extends Vue {
       return;
     }
     this.pgnSets = {...params};
+    this.isLoading = true;
     const { items, totalItems } = await getSearchingList(params);
+    this.isLoading = false;
     this.books = items;
     this.pgnSets.total = totalItems;
   }
@@ -47,6 +58,10 @@ export default class App extends Vue {
 
 <style lang="scss">
 @import "~bootstrap";
+
+html, body, #app, .container {
+  height: 100%;
+}
 
 body {
   @extend .bg-light;

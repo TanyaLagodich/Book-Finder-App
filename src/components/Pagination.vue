@@ -1,22 +1,27 @@
 <template>
   <nav v-if="pgnSets && pagesCount && pagesCount > 1"
-       aria-label="Page navigation example">
+       aria-label="Page navigation">
     <ul class="pagination justify-content-center">
-      <li class="page-item disabled">
+      <li class="page-item"
+          :class="{'disabled': currentPage === 1}">
         <a class="page-link" 
            href="#" 
-           tabindex="-1">Previous</a>
+           tabindex="-1"
+           @click.prevent="changeParams(1)">First</a>
       </li>
       <li v-for="(page, index) in formatPages"
           :key="index"
-          class="page-item">
+          class="page-item"
+          :class="{'disabled': currentPage === page || page === '...'}">
         <a class="page-link" 
            href="#"
-           :class="currentPage === page ? 'text-gray disabled' : page === '...' ? 'disabled' : 'link-black'"
            @click.prevent="changeParams(page)">{{ page }}</a>
       </li>
-      <li class="page-item">
-        <a class="page-link" href="#">Next</a>
+      <li class="page-item"
+          :class="{'disabled': currentPage === formatPages[formatPages.length - 1]}">
+        <a class="page-link" 
+           href="#"
+           @click.prevent="changeParams(formatPages[formatPages.length - 1])">Last</a>
       </li>
     </ul>
   </nav>

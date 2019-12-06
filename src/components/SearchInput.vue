@@ -9,8 +9,8 @@
            @keydown.enter="$emit('searchBooks', params)"
            :readonly="readonly">
     <div class="input-group-append">
-      <button v-if="params.query" 
-              type="button" 
+      <button v-show="params.query" 
+              type="button"
               class="btn btn-outline-secondary btn-close" 
               aria-label="Close"
               @click="params.query = ''">

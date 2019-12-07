@@ -25,35 +25,20 @@ import Component from 'vue-class-component';
 import { PgnSets } from '../typings/entities';
 import { Prop } from 'vue-property-decorator';
 
-<<<<<<< Updated upstream
 @Component
 export default class Pagination extends Vue {
   @Prop()
     pgnSets!: PgnSets
   
   public totalPage: Array<number> = [];
-=======
-@Component({
-  props: {
-    pgnSets: {},
-  },
-})
-export default class Pagination extends Vue {
-  public totalPage: number[] = [];
->>>>>>> Stashed changes
 
   public created() {
     const amount = Math.floor(this.pgnSets.total / this.pgnSets.maxResults);
     this.totalPage = [...Array(amount).keys()].slice(1);
   }
 
-<<<<<<< Updated upstream
-  changeParams(page: number): void {
-    this.pgnSets.offset = this.pgnSets.limit * page;
-=======
   public changeParams(page: number) {
     this.pgnSets.startIndex = this.pgnSets.maxResults * page;
->>>>>>> Stashed changes
     this.$emit('searchBooks', this.pgnSets);
   }
 }

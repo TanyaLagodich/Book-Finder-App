@@ -31,13 +31,7 @@ import Component from 'vue-class-component';
     books: Array,
   },
 })
-<<<<<<< Updated upstream
 export default class BooksList extends Vue {}
-=======
-export default class BooksList extends Vue {
-
-}
->>>>>>> Stashed changes
 </script>
 <style lang="scss" scoped>
   img {

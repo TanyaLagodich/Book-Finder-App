@@ -1,8 +1,8 @@
 export interface PgnSets {
-  maxResults?: number;
-  startIndex?: number;
-  total?: number;
-  query?: string;
+  maxResults: number;
+  startIndex: number;
+  total: number;
+  query: string;
 }
 
 export interface PaginationType {

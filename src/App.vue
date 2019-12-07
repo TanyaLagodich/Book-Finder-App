@@ -26,7 +26,12 @@ import { PgnSets, PaginationType } from './typings/entities';
 })
 export default class App extends Vue {
   public books: object[] = [];
-  public pgnSets: PgnSets = {};
+  public pgnSets: PgnSets = {
+    maxResults: 10,
+    startIndex: 0,
+    total: 0,
+    query: '',
+  };
 
   public async searchBooks(params: PgnSets) {
     if (!params.query) {

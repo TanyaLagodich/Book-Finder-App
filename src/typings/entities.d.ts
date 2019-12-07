@@ -4,8 +4,3 @@ export interface PgnSets {
   total: number;
   query: string;
 }
-
-export interface PaginationType {
-  items: Array<any>,
-  total: number
-}

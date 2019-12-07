@@ -6,10 +6,11 @@
            aria-label="Type author, book name, other..." 
            aria-describedby="basic-addon2"
            v-model="params.query"
-           @keydown.enter="$emit('searchBooks', params)">
+           @keydown.enter="$emit('searchBooks', params)"
+           :readonly="readonly">
     <div class="input-group-append">
-      <button v-if="params.query" 
-              type="button" 
+      <button v-show="params.query" 
+              type="button"
               class="btn btn-outline-secondary btn-close" 
               aria-label="Close"
               @click="params.query = ''">
@@ -25,9 +26,12 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import { PgnSets } from '../typings/entities';
+import { Prop } from 'vue-property-decorator';
 
 @Component
 export default class SeachInput extends Vue {
+  @Prop()
+    public readonly!: boolean;
   public params: PgnSets = {
     query: '',
     maxResults: 10,

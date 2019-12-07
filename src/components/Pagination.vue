@@ -1,20 +1,27 @@
 <template>
-  <nav aria-label="Page navigation example">
+  <nav v-if="pgnSets && pagesCount && pagesCount > 1"
+       aria-label="Page navigation">
     <ul class="pagination justify-content-center">
-      <li class="page-item disabled">
+      <li class="page-item"
+          :class="{'disabled': currentPage === 1}">
         <a class="page-link" 
            href="#" 
-           tabindex="-1">Previous</a>
+           tabindex="-1"
+           @click.prevent="changeParams(1)">First</a>
       </li>
-      <li v-for="page in totalPage"
-          :key="page"
-          class="page-item">
+      <li v-for="(page, index) in formatPages"
+          :key="index"
+          class="page-item"
+          :class="{'disabled': currentPage === page || page === '...'}">
         <a class="page-link" 
            href="#"
            @click.prevent="changeParams(page)">{{ page }}</a>
       </li>
-      <li class="page-item">
-        <a class="page-link" href="#">Next</a>
+      <li class="page-item"
+          :class="{'disabled': currentPage === formatPages[formatPages.length - 1]}">
+        <a class="page-link" 
+           href="#"
+           @click.prevent="changeParams(formatPages[formatPages.length - 1])">Last</a>
       </li>
     </ul>
   </nav>
@@ -28,17 +35,46 @@ import { Prop } from 'vue-property-decorator';
 @Component
 export default class Pagination extends Vue {
   @Prop()
-    pgnSets!: PgnSets
-  
-  public totalPage: Array<number> = [];
+    public pgnSets!: PgnSets;
 
-  public created() {
-    const amount = Math.floor(this.pgnSets.total / this.pgnSets.maxResults);
-    this.totalPage = [...Array(amount).keys()].slice(1);
+  public nearbyPagesLimit: number = 3;
+
+  get pagesCount() {
+    return Math.ceil(this.pgnSets.total / this.pgnSets.maxResults);
+  }
+
+  get currentPage() {
+    return Math.ceil(this.pgnSets.startIndex / this.pgnSets.maxResults) + 1;
+  }
+
+  get pages() {
+    return [...Array(this.pagesCount + 1).keys()].slice(1);
+  }
+
+  get formatPages() {
+    const res: any[] = [];
+    this.pages.forEach((p, i) => {
+      if (p === 1) {
+        res[i] = p;
+      } else if (p === this.pagesCount) {
+        res[i] = p;
+      } else if (0 === (this.currentPage - this.nearbyPagesLimit) - (i + 1)) {
+        res[i] = '...';
+      } else if (0 === (this.currentPage + this.nearbyPagesLimit) - (i + 1)) {
+        res[i] = '...';
+      } else if (0 < (this.currentPage - this.nearbyPagesLimit) - (i + 1)) {
+        return;
+      } else if (0 > (this.currentPage + this.nearbyPagesLimit) - (i + 1)) {
+        return;
+      } else {
+        res[i] = p;
+      }
+    });
+    return res.filter((el) => el !== null);
   }
 
   public changeParams(page: number) {
-    this.pgnSets.startIndex = this.pgnSets.maxResults * page;
+    this.pgnSets.startIndex = this.pgnSets.maxResults * (page - 1);
     this.$emit('searchBooks', this.pgnSets);
   }
 }
